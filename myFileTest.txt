@@ -1,0 +1,21 @@
+
+A few resources for today -- I advise you to work on projects and/or study in downtime:
+// some important links to explore
+sqlbolt.com
+https://expressjs.com/en/guide/routing.html
+https://expressjs.com/en/guide/writing-middleware.html
+https://expressjs.com/en/guide/using-middleware.html
+https://expressjs.com/en/guide/error-handling.html (edited) 
+
+Some important commands for setting up the server.
+ 
+npm install //looks at it and sets up the correct files
+npm start 	//to run package.json
+//other commands
+npm install --save-dev ts-node @types/express nodemon //install for typescript
+npm install express //install express
+npm init -y //creates the package.json. -y fills it out with default values.
+export TS_NODE_COMPILER_OPTIONS='{"esModuleInterop":true}' //makes it so default import works
+npm install --save-dev typescript //local install
+npm install @types/express
+ts-node filename //runs typescript
