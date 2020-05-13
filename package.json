@@ -1,0 +1,25 @@
+{
+  "name": "project0",
+  "version": "1.0.0",
+  "description": "basic TS app",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "nodemon --exec ts-node src/index.ts",
+    "test": "echo \\\"testing not configured\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revature-react-5-4-20-classroom/project-0-acharyajanak91.git"
+  },
+  "author": "janak acharya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/revature-react-5-4-20-classroom/project-0-acharyajanak91/issues"
+  },
+  "homepage": "https://github.com/revature-react-5-4-20-classroom/project-0-acharyajanak91#readme",
+  "dependencies": {
+    "@types/express": "^4.17.6",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3"
+  }
+}
