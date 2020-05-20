@@ -28,7 +28,7 @@ userRouter.get('/:id',(req:Request,res:Response)=>{
 userRouter.post('/',async (req:Request,res:Response)=>{
     // lets use object destructuring for checking the object's existance.
     let{id,username,password,f_name,l_name,email,role}=req.body;
-    if(id&&username&&password&&f_name&&l_name&&email && role){
+    if(id && username && password && f_name && l_name && email && role){
        await addNewUser(new User(id,username,f_name,l_name,password,email,role));
         res.sendStatus(201);
     }else{

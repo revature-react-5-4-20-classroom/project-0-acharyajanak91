@@ -46,7 +46,7 @@ export async function getUserById(id:number):Promise<User[]> {
     
 }
 
-export async function addNewUser(user:User) : Promise<User> {
+export async function addNewUser(user:User):Promise<User[]>{
     let client: PoolClient=await connectionPool.connect();
     try{
         const roleIdResult : QueryResult=await client.query(
@@ -57,6 +57,7 @@ export async function addNewUser(user:User) : Promise<User> {
             `INSERT INTO users(id,username,"password",first_name,last_name,email,role_id) VALUES
             ($1,$2,$3,$4,$5,$6,$7);`,[user.id,user.username,user.password,user.f_name,user.l_name,user.email,user.role]
         )
+        console.log(insertUserResult);
         let result:QueryResult =await client.query(
             `SELECT user.id,users.username,users."password",users.first_name,users.last_name,users.email,roles.role_name
             FROM users INNER JOIN roles ON users.roles_id=roles.id
@@ -64,7 +65,7 @@ export async function addNewUser(user:User) : Promise<User> {
         );
         return result.rows.map(
             (u)=>{return new User(u.id,u.username,u.password,u.f_name,u.l_name,u.email,u.role_name)}
-        )[0];
+        );
     } catch (e) {
         throw new Error (`Failed to add user to DB: ${e.message}`);
     }finally{
