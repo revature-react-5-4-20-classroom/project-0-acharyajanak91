@@ -12,6 +12,9 @@ import {connectionPool} from "./repository";
 //express() is the top level function 
 //invoked for the express appliction.
 const app: Application=express();
+app.get('/new-endpoint',(req:Request,res:Response)=>{
+    res.send('webhook worked');
+})
 app.use(bodyParser.json());
 //lets ask app to use our middleware
 app.use(sessionMiddleware);
