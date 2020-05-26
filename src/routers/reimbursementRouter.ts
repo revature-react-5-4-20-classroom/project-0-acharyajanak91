@@ -22,6 +22,32 @@ reimbursementRouter.use(authReadOnlyMiddleware);
     }
     
 });
+// TODO reimbursement by status.
+reimbursementRouter.get('/status/:status', async(req:Request,res:Response)=>{
+    const id=+req.params.status; // + change to number ie dynamic type
+    if(isNaN(id)){
+        res.status(400).send('Must include numerric id in path');
+    } else {
+        //res.json(getReimbursementById(id));
+        let client : PoolClient;
+    client =await connectionPool.connect();
+    console.log(id);
+    try{
+        let result: QueryResult;
+        result=await client.query(
+           `SELECT * FROM Reimbursement WHERE reimbursement.status=$1;`,[id]);
+        console.log(result.rows[0]);
+           res.send(result.rows);
+           // return result.rows.map((u)=>{
+        //     return new User(u.id, u.username, u.password,u.f_name,u.l_name,u.email,u.role_name);
+        // })[0];
+    }catch(e){
+        throw new Error(`Failed to query for reimbursement: ${e.message}`);
+    } finally {
+        client && client.release();
+    }
+    }
+});
 //lets get book by ID
 reimbursementRouter.get('/:id',async (req:Request,res:Response)=>{
     const id=+req.params.id; // + change to number ie dynamic type
