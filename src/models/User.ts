@@ -6,7 +6,7 @@ export class User{
     f_name:string;
     l_name:string;
     email:string;
-    role:number; //just the level of authorization
+    role:number; 
 
 //constructor
 constructor(id:number,username:string,password:string,f_name:string,l_name:string,email:string,role:number){

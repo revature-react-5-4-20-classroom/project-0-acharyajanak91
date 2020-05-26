@@ -65,6 +65,7 @@ app.post('/login', async (req:Request,res:Response)=>{
 app.use('/reimbursement',reimbursementRouter);
 app.use('/users',userRouter);
 
+
 //Listener port for the API for the 
 app.listen(1999,()=>{
     console.log("app has started, testing connection:");
@@ -73,7 +74,7 @@ app.listen(1999,()=>{
             console.log('connected');
             client.query('SELECT * FROM users;').then(
                 (result: QueryResult)=>{
-                    console.log(result.rows);  // just displays the first record
+                    console.log(result.rows);  // just displays all rows
                 }
             ).catch((err)=>{
                 console.error(err.message);
