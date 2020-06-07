@@ -8,6 +8,8 @@ import { loggingMiddleware } from "./middleware/loggingMiddleware";
 import { findUserByUsernamePassword } from "./repository/user-data-access";
 import {PoolClient, QueryResult} from "pg";
 import {connectionPool} from "./repository";
+import { corsFilter } from "./middleware/corsFilter";
+
 
 //express() is the top level function 
 //invoked for the express appliction.
@@ -16,7 +18,10 @@ app.get('/new-endpoint',(req:Request,res:Response)=>{
     res.send('webhook worked');
 })
 app.use(bodyParser.json());
+//lets use the cors filter
 //lets ask app to use our middleware
+
+app.use(corsFilter);
 app.use(sessionMiddleware);
 //app.use(authAdminMiddleware);
 // now lets use the loggingMiddleware
