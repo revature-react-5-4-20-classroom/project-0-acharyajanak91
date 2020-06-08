@@ -8,13 +8,13 @@ import { Reimbursement } from "../models/Reimbursement";
  import { connectionPool } from '../repository';
  export const reimbursementRouter:Router=express.Router();
  //lets use the authentication in the book router too.
-reimbursementRouter.use(authRoleFactory(['Finance_Manager','User']));  // I commented this for later use.
+reimbursementRouter.use(authRoleFactory([3,1]));  // I commented this for later use.
 reimbursementRouter.use(authReadOnlyMiddleware);
 // //get methods for users reimbursement reading
  reimbursementRouter.get('/',async (req:Request,res:Response,next:NextFunction)=>{
     
     try{
-        if(req.session!.user.role==='Finance_Manager'){
+        if(req.session!.user.role===3){
         const reimb :Reimbursement[]=await getAllReimbursement();
         res.json(reimb);} else { res.send('please login with the valid role');}
     } catch(e){
@@ -78,7 +78,7 @@ reimbursementRouter.post('/postReimbursement',async (req:Request,res:Response)=>
     // lets use object destructuring for checking the object's existance.
     console.log(req.body);
     let {reimbursement_id,author,amount,date_submitted,date_resolved,description,resolver,status,rembursement_type}=req.body;
-    if(req.session?.user.id===author ||req.session!.user.role==='Finance_Manager'){
+    if(req.session?.user.id===author ||req.session!.user.role===3){
    
     if(reimbursement_id && author){
        await addReimbursement(new Reimbursement(reimbursement_id,author,amount,date_submitted,date_resolved,description,resolver,status,rembursement_type));
@@ -94,7 +94,7 @@ reimbursementRouter.post('/postReimbursement',async (req:Request,res:Response)=>
 //lets now patch the reimbursement
 //Lets patch the user now
 reimbursementRouter.patch('/update', async(req:Request,res:Response)=>{
-    if(req.session?.user.role!=='Finance_Manager'){
+    if(req.session?.user.role!==3){
         res.send('You are not the valid user for updating the Reimbursement');
         
     } else{

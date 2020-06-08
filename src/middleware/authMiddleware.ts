@@ -13,7 +13,7 @@ export const authAdminMiddleware=(req:Request, res:Response, next: NextFunction)
     }
 }
 // modified to reflect the role changes.
-export function authRoleFactory(roles:string[]){
+export function authRoleFactory(roles:number[]){
     return(req:Request,res:Response, next:NextFunction)=>{
         if(!req.session||!req.session.user){
             res.status(401).send('please login');

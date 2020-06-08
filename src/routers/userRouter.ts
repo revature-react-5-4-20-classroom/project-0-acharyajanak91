@@ -7,13 +7,13 @@ import { connectionPool } from '../repository';
 //import {sessionMiddleware} from'../middleware/sessionMiddleware'; 
 
 export const userRouter:Router=express.Router();
-userRouter.use(authRoleFactory(['Admin','User','Finance_Manager'])); 
+userRouter.use(authRoleFactory([1,2,3])); 
 //userRouter.use(sessionMiddleware);
 //userRouter.use(authReadOnlyMiddleware);
 //NOW ONWARDS USERS.........
 userRouter.get('/',async (req:Request,res:Response,next:NextFunction)=>{
     try{
-        if(req.session!.user.role==='Finance_Manager'){
+        if(req.session!.user.role===3){
         const users :User[]=await getAllUsers();
         res.json(users);}
         else{ res.send('please login with the valid role');}
@@ -27,7 +27,7 @@ userRouter.get('/:id',async (req:Request,res:Response)=>{
    // console.log(req.session?.user.role);
     if(isNaN(id)){
         res.status(400).send('Please pass the Numeric ID')
-    }else if(req.session?.user.id===id || req.session!.user.role==='Finance_Manager'){
+    }else if(req.session?.user.id===id || req.session!.user.role===3){
      //   console.log(req.session!.user.id);
        // console.log(req.params.id);
         let client : PoolClient;
@@ -38,7 +38,7 @@ userRouter.get('/:id',async (req:Request,res:Response)=>{
         result=await client.query(
            `SELECT * FROM users WHERE users.id=${id};`);
         //return result.rows;
-        res.send(result.rows);
+        res.json(result.rows);
         
     }
     catch (e){
@@ -54,7 +54,7 @@ userRouter.get('/:id',async (req:Request,res:Response)=>{
 });
 userRouter.post('/',async (req:Request,res:Response)=>{
     // lets use object destructuring for checking the object's existance.
-    if(req.session!.user.role==='Admin'){
+    if(req.session?.user.role===1){
     let{id,username,password,f_name,l_name,email,role}=req.body;
     if(username && password && f_name && l_name && email&& role){
        await addNewUser(new User(id,username,password,f_name,l_name,email,role));
@@ -69,7 +69,7 @@ userRouter.post('/',async (req:Request,res:Response)=>{
 
 //Lets patch the user now
 userRouter.patch('/update', async(req:Request,res:Response)=>{
-    if(req.session?.user.role!=='Admin'){
+    if(req.session?.user.role!==1){
         res.send('You are not the valid user for updating the user');
         
     } else{

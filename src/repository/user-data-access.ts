@@ -114,12 +114,12 @@ export async function findUserByUsernamePassword(username:string, password:strin
     try{
         let result:QueryResult;
         result=await client.query(
-            `SELECT users.id, users.username, users."password",users.first_name,users.last_name,users.email,roles.role_name
-            FROM users INNER JOIN roles ON users.role_id=roles.id
+            `SELECT users.id, users.username, users."password",users.first_name,users.last_name,users.email,users.role_id
+            FROM users RIGHT JOIN roles ON users.role_id=roles.id
             WHERE users.username = $1 AND users.password =$2;`, [username,password]
         );
         const usersMatchingUsernamePassword = result.rows.map((u)=>{
-            return new User(u.id, u.username,u.password,u.f_name,u.l_name,u.email,u.role_name);
+            return new User(u.id, u.username,u.password,u.first_name,u.last_name,u.email,u.role_id);
         })
         if(usersMatchingUsernamePassword.length>0){
             return usersMatchingUsernamePassword[0];
