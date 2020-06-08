@@ -5,12 +5,12 @@ import { getAllUsers, addNewUser } from '../repository/user-data-access';
 import { PoolClient, QueryResult } from 'pg';
 import { connectionPool } from '../repository';
 import { corsFilter } from '../middleware/corsFilter';
-//import {sessionMiddleware} from'../middleware/sessionMiddleware'; 
+import {sessionMiddleware} from'../middleware/sessionMiddleware'; 
 
 export const userRouter:Router=express.Router();
 userRouter.use(authRoleFactory([1,2,3])); 
 userRouter.use(corsFilter);
-//userRouter.use(sessionMiddleware);
+userRouter.use(sessionMiddleware);
 //userRouter.use(authReadOnlyMiddleware);
 //NOW ONWARDS USERS.........
 userRouter.get('/',async (req:Request,res:Response,next:NextFunction)=>{
