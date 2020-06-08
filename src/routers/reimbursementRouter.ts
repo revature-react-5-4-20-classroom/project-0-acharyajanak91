@@ -6,10 +6,12 @@ import { Reimbursement } from "../models/Reimbursement";
  import {  getAllReimbursement,addReimbursement } from '../repository/reimbursement-data-access';
  import { PoolClient, QueryResult } from 'pg';
  import { connectionPool } from '../repository';
+import { corsFilter } from '../middleware/corsFilter';
  export const reimbursementRouter:Router=express.Router();
  //lets use the authentication in the book router too.
 reimbursementRouter.use(authRoleFactory([3,1]));  // I commented this for later use.
 reimbursementRouter.use(authReadOnlyMiddleware);
+reimbursementRouter.use(corsFilter);
 // //get methods for users reimbursement reading
  reimbursementRouter.get('/',async (req:Request,res:Response,next:NextFunction)=>{
     
